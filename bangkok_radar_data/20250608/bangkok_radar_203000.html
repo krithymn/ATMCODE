@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_36fc911310ffa807e8d7ea9ebbc9444c {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+                <div style="position: fixed; 
+                            top: 15px; 
+                            left: 50%; 
+                            transform: translateX(-50%);
+                            width: 500px; 
+                            height: 80px; 
+                            z-index:9999; 
+                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                            color: white;
+                            font-family: Arial, sans-serif;
+                            font-size: 18px;
+                            font-weight: bold;
+                            padding: 15px;
+                            border-radius: 15px;
+                            border: 3px solid #fff;
+                            text-align: center;
+                            box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                    ✈️ Bangkok & BKK Airport Weather Radar<br>
+                    <span style="font-size: 14px; font-weight: normal;">📅 2025-06-08 20:30:00</span><br>
+                    <span style="font-size: 12px; font-weight: normal;">🛰️ High Detail • 📍 Bangkok Metro Area</span>
+                </div>
+            
+    
+                <style>
+                    .leaflet-container {
+                        font-family: Arial, sans-serif;
+                    }
+                    .leaflet-popup-content {
+                        font-weight: bold;
+                    }
+                </style>
+            
+    
+            <div class="folium-map" id="map_36fc911310ffa807e8d7ea9ebbc9444c" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_36fc911310ffa807e8d7ea9ebbc9444c = L.map(
+                "map_36fc911310ffa807e8d7ea9ebbc9444c",
+                {
+                    center: [13.7563, 100.5018],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_6529237269fa06735207fed1ab316226 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_6529237269fa06735207fed1ab316226.addTo(map_36fc911310ffa807e8d7ea9ebbc9444c);
+        
+    
+            var tile_layer_108cec3002489468295c5223d783549b = L.tileLayer(
+                "https://tilecache.rainviewer.com/v2/radar/1749382200/256/{z}/{x}/{y}/2/1_1.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "RainViewer | Thailand Weather Data",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 0.8,
+}
+
+            );
+        
+    
+            tile_layer_108cec3002489468295c5223d783549b.addTo(map_36fc911310ffa807e8d7ea9ebbc9444c);
+        
+    
+            var marker_ff4215785a5b353320b7536efbc1bd78 = L.marker(
+                [13.69, 100.75],
+                {
+}
+            ).addTo(map_36fc911310ffa807e8d7ea9ebbc9444c);
+        
+    
+            var icon_7ccb13c9708b4d1e949a9026164ddadc = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ddd73b5ba0b2c3fecb994e053a13ba2d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ec8a053f11f89df0b3940f754542b40c = $(`<div id="html_ec8a053f11f89df0b3940f754542b40c" style="width: 100.0%; height: 100.0%;">Suvarnabhumi Airport (BKK)</div>`)[0];
+                popup_ddd73b5ba0b2c3fecb994e053a13ba2d.setContent(html_ec8a053f11f89df0b3940f754542b40c);
+            
+        
+
+        marker_ff4215785a5b353320b7536efbc1bd78.bindPopup(popup_ddd73b5ba0b2c3fecb994e053a13ba2d)
+        ;
+
+        
+    
+    
+            marker_ff4215785a5b353320b7536efbc1bd78.bindTooltip(
+                `<div>
+                     BKK Airport
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ff4215785a5b353320b7536efbc1bd78.setIcon(icon_7ccb13c9708b4d1e949a9026164ddadc);
+            
+    
+            var circle_marker_3d721ae144777188192138051aaf9ec6 = L.circleMarker(
+                [13.7563, 100.5018],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(map_36fc911310ffa807e8d7ea9ebbc9444c);
+        
+    
+        var popup_1540d7fb988e5113ad1676b344686ad7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9781e31f22c8a67ebb9639f1a147f59a = $(`<div id="html_9781e31f22c8a67ebb9639f1a147f59a" style="width: 100.0%; height: 100.0%;"><b>Bangkok Downtown</b></div>`)[0];
+                popup_1540d7fb988e5113ad1676b344686ad7.setContent(html_9781e31f22c8a67ebb9639f1a147f59a);
+            
+        
+
+        circle_marker_3d721ae144777188192138051aaf9ec6.bindPopup(popup_1540d7fb988e5113ad1676b344686ad7)
+        ;
+
+        
+    
+    
+            circle_marker_3d721ae144777188192138051aaf9ec6.bindTooltip(
+                `<div>
+                     Bangkok Downtown
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_edc93a3efaecd42cbd58ccdfebe1e102 = L.circleMarker(
+                [13.69, 100.75],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(map_36fc911310ffa807e8d7ea9ebbc9444c);
+        
+    
+        var popup_b2625fb5ddc99b24cfba1870fb2eafe0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3b0c5beadb81bad71e5a8a790f45863c = $(`<div id="html_3b0c5beadb81bad71e5a8a790f45863c" style="width: 100.0%; height: 100.0%;"><b>BKK Airport</b></div>`)[0];
+                popup_b2625fb5ddc99b24cfba1870fb2eafe0.setContent(html_3b0c5beadb81bad71e5a8a790f45863c);
+            
+        
+
+        circle_marker_edc93a3efaecd42cbd58ccdfebe1e102.bindPopup(popup_b2625fb5ddc99b24cfba1870fb2eafe0)
+        ;
+
+        
+    
+    
+            circle_marker_edc93a3efaecd42cbd58ccdfebe1e102.bindTooltip(
+                `<div>
+                     BKK Airport
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d53466709a8d55ac0b873cc78879f077 = L.circleMarker(
+                [13.9126, 100.6071],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(map_36fc911310ffa807e8d7ea9ebbc9444c);
+        
+    
+        var popup_3a156632cfd05840a41730e32daf2013 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f443b12360f70adbbdb01af25e4c74db = $(`<div id="html_f443b12360f70adbbdb01af25e4c74db" style="width: 100.0%; height: 100.0%;"><b>Don Mueang Airport</b></div>`)[0];
+                popup_3a156632cfd05840a41730e32daf2013.setContent(html_f443b12360f70adbbdb01af25e4c74db);
+            
+        
+
+        circle_marker_d53466709a8d55ac0b873cc78879f077.bindPopup(popup_3a156632cfd05840a41730e32daf2013)
+        ;
+
+        
+    
+    
+            circle_marker_d53466709a8d55ac0b873cc78879f077.bindTooltip(
+                `<div>
+                     Don Mueang Airport
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d248b7027fa6c704c50e2a99307fd089 = L.circleMarker(
+                [13.599, 100.5998],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(map_36fc911310ffa807e8d7ea9ebbc9444c);
+        
+    
+        var popup_044b567bae41dd503abba40a94dd9f05 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c416d3f4c4f3a9dade99a14c8a2c45f4 = $(`<div id="html_c416d3f4c4f3a9dade99a14c8a2c45f4" style="width: 100.0%; height: 100.0%;"><b>Samut Prakan</b></div>`)[0];
+                popup_044b567bae41dd503abba40a94dd9f05.setContent(html_c416d3f4c4f3a9dade99a14c8a2c45f4);
+            
+        
+
+        circle_marker_d248b7027fa6c704c50e2a99307fd089.bindPopup(popup_044b567bae41dd503abba40a94dd9f05)
+        ;
+
+        
+    
+    
+            circle_marker_d248b7027fa6c704c50e2a99307fd089.bindTooltip(
+                `<div>
+                     Samut Prakan
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_003c18728bb84c2ea765d4e8f51f3f2c = L.circleMarker(
+                [13.8621, 100.5144],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(map_36fc911310ffa807e8d7ea9ebbc9444c);
+        
+    
+        var popup_e5382b645bd1b53e18009282f9108e7f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9573dce7caa11e31804943135d3af0dc = $(`<div id="html_9573dce7caa11e31804943135d3af0dc" style="width: 100.0%; height: 100.0%;"><b>Nonthaburi</b></div>`)[0];
+                popup_e5382b645bd1b53e18009282f9108e7f.setContent(html_9573dce7caa11e31804943135d3af0dc);
+            
+        
+
+        circle_marker_003c18728bb84c2ea765d4e8f51f3f2c.bindPopup(popup_e5382b645bd1b53e18009282f9108e7f)
+        ;
+
+        
+    
+    
+            circle_marker_003c18728bb84c2ea765d4e8f51f3f2c.bindTooltip(
+                `<div>
+                     Nonthaburi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_01c1391703b0aac4bd762af2dc2359cf = L.circleMarker(
+                [14.0208, 100.525],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "darkgreen", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(map_36fc911310ffa807e8d7ea9ebbc9444c);
+        
+    
+        var popup_3672a6d023e61dbd4ad94f826a4e61f4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0ff2ce34857cf4076ed64a6cdc8f0d9d = $(`<div id="html_0ff2ce34857cf4076ed64a6cdc8f0d9d" style="width: 100.0%; height: 100.0%;"><b>Pathum Thani</b></div>`)[0];
+                popup_3672a6d023e61dbd4ad94f826a4e61f4.setContent(html_0ff2ce34857cf4076ed64a6cdc8f0d9d);
+            
+        
+
+        circle_marker_01c1391703b0aac4bd762af2dc2359cf.bindPopup(popup_3672a6d023e61dbd4ad94f826a4e61f4)
+        ;
+
+        
+    
+    
+            circle_marker_01c1391703b0aac4bd762af2dc2359cf.bindTooltip(
+                `<div>
+                     Pathum Thani
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            map_36fc911310ffa807e8d7ea9ebbc9444c.fitBounds(
+                [[13.2, 100.0], [14.2, 101.2]],
+                {}
+            );
+        
+</script>
+</html>

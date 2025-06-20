@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_80e0c93cb074c1621fc6c204dc1137fe {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+                <div style="position: fixed; 
+                            top: 15px; 
+                            left: 50%; 
+                            transform: translateX(-50%);
+                            width: 650px; 
+                            height: 140px; 
+                            z-index:9999; 
+                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                            color: white;
+                            font-family: Arial, sans-serif;
+                            font-size: 16px;
+                            font-weight: bold;
+                            padding: 15px;
+                            border-radius: 15px;
+                            border: 3px solid #fff;
+                            text-align: center;
+                            box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                    ⏰ Bangkok Time-Aware Weather Flight Radar<br>
+                    <span style="font-size: 14px; font-weight: normal;">📅 Flight Data: 2025-06-16 13:33:55</span><br>
+                    <span style="font-size: 12px; font-weight: normal;">🌦️ Weather: 2025-06-16 13:30:00 (3.9min ago)</span><br>
+                    <span style="font-size: 11px; font-weight: normal;">
+                        Total: 5 | High Conf: 5 | Medium: 0 | Low: 0
+                    </span><br>
+                    <span style="font-size: 10px; font-weight: normal; color: #ffeb3b;">
+                        ⚠️ Analysis considers weather data age & flight movement
+                    </span><br>
+                    <span style="font-size: 9px; font-weight: normal; color: #e8f5e8;">
+                        🟢 = Recent Data | 🟡 = Older Data | 🔴 = Stale Data
+                    </span>
+                </div>
+            
+    
+            <div class="folium-map" id="map_80e0c93cb074c1621fc6c204dc1137fe" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_80e0c93cb074c1621fc6c204dc1137fe = L.map(
+                "map_80e0c93cb074c1621fc6c204dc1137fe",
+                {
+                    center: [13.7563, 100.5018],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_6d42f1eaa3a4236a2b9dc3092c3c0e80 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_6d42f1eaa3a4236a2b9dc3092c3c0e80.addTo(map_80e0c93cb074c1621fc6c204dc1137fe);
+        
+    
+            var tile_layer_bc57a42d1f20f87c8af0638aa9614fa1 = L.tileLayer(
+                "https://tilecache.rainviewer.com/v2/radar/1750048200/256/{z}/{x}/{y}/2/1_1.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "RainViewer | Time-Aware Weather Data",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 0.7,
+}
+
+            );
+        
+    
+            tile_layer_bc57a42d1f20f87c8af0638aa9614fa1.addTo(map_80e0c93cb074c1621fc6c204dc1137fe);
+        
+    
+            var marker_e1fcbf6fe802e0dd02143dc97a7a0128 = L.marker(
+                [13.6973, 100.7625],
+                {
+}
+            ).addTo(map_80e0c93cb074c1621fc6c204dc1137fe);
+        
+    
+            var icon_99958ec7771fbf37127f913d90ae2519 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f0f7f4a9da13059a9eb11e5304c16842 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_bf104f4a420e1fb6ccf364bddaad5525 = $(`<div id="html_bf104f4a420e1fb6ccf364bddaad5525" style="width: 100.0%; height: 100.0%;">                 <div style="width: 300px;">                     <h4><b>THA204</b></h4>                     <hr>                     <b>Flight Info:</b><br>                     • Altitude: 250 ft<br>                     • Speed: 128 kts<br>                     • Distance to BKK: 2.4 km<br>                     <br>                     <b>Weather Analysis:</b><br>                     • Intensity: 0.0 dBZ<br>                     • Category: CLEAR<br>                     • Conditions: CLEAR<br>                     <br>                     <b>⏰ Temporal Analysis:</b><br>                     • Weather Data Age: 3.9 minutes<br>                     • Data Status: CURRENT<br>                     • Confidence: HIGH<br>                     • Weather Frame: 2025-06-16 13:30:00<br>                     <br>                     <b>Assessment:</b><br>                     CLEAR CONDITIONS (Data: 3.9min old)                 </div>                 </div>`)[0];
+                popup_f0f7f4a9da13059a9eb11e5304c16842.setContent(html_bf104f4a420e1fb6ccf364bddaad5525);
+            
+        
+
+        marker_e1fcbf6fe802e0dd02143dc97a7a0128.bindPopup(popup_f0f7f4a9da13059a9eb11e5304c16842)
+        ;
+
+        
+    
+    
+            marker_e1fcbf6fe802e0dd02143dc97a7a0128.bindTooltip(
+                `<div>
+                     THA204 - Data: 3.9min old
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e1fcbf6fe802e0dd02143dc97a7a0128.setIcon(icon_99958ec7771fbf37127f913d90ae2519);
+            
+    
+            var marker_27e4987fb239bd5e1a71225b20d5e453 = L.marker(
+                [13.8205, 100.8795],
+                {
+}
+            ).addTo(map_80e0c93cb074c1621fc6c204dc1137fe);
+        
+    
+            var icon_be82e17acfeb817dca17b158d0ece4cb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_94d9bf1da8f300e8bef3400eabc943b8 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_38ec36aac18f73590d393d1fe544f59d = $(`<div id="html_38ec36aac18f73590d393d1fe544f59d" style="width: 100.0%; height: 100.0%;">                 <div style="width: 300px;">                     <h4><b>BKP272</b></h4>                     <hr>                     <b>Flight Info:</b><br>                     • Altitude: 4350 ft<br>                     • Speed: 217 kts<br>                     • Distance to BKK: 21.1 km<br>                     <br>                     <b>Weather Analysis:</b><br>                     • Intensity: 0.0 dBZ<br>                     • Category: CLEAR<br>                     • Conditions: CLEAR<br>                     <br>                     <b>⏰ Temporal Analysis:</b><br>                     • Weather Data Age: 3.9 minutes<br>                     • Data Status: CURRENT<br>                     • Confidence: HIGH<br>                     • Weather Frame: 2025-06-16 13:30:00<br>                     <br>                     <b>Assessment:</b><br>                     CLEAR CONDITIONS (Data: 3.9min old)                 </div>                 </div>`)[0];
+                popup_94d9bf1da8f300e8bef3400eabc943b8.setContent(html_38ec36aac18f73590d393d1fe544f59d);
+            
+        
+
+        marker_27e4987fb239bd5e1a71225b20d5e453.bindPopup(popup_94d9bf1da8f300e8bef3400eabc943b8)
+        ;
+
+        
+    
+    
+            marker_27e4987fb239bd5e1a71225b20d5e453.bindTooltip(
+                `<div>
+                     BKP272 - Data: 3.9min old
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_27e4987fb239bd5e1a71225b20d5e453.setIcon(icon_be82e17acfeb817dca17b158d0ece4cb);
+            
+    
+            var marker_bd2931426e3ede7c2db2c74fb2fd7bbf = L.marker(
+                [13.9311, 100.6192],
+                {
+}
+            ).addTo(map_80e0c93cb074c1621fc6c204dc1137fe);
+        
+    
+            var icon_7874af20920fae22a6b2b3a21a3c602b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_817a9051aa86f55b3b2d08bc96b73ecd = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_fec036b9ad93a002bf8862c1c0da9818 = $(`<div id="html_fec036b9ad93a002bf8862c1c0da9818" style="width: 100.0%; height: 100.0%;">                 <div style="width: 300px;">                     <h4><b>SNY041</b></h4>                     <hr>                     <b>Flight Info:</b><br>                     • Altitude: 425 ft<br>                     • Speed: 69 kts<br>                     • Distance to BKK: 31.1 km<br>                     <br>                     <b>Weather Analysis:</b><br>                     • Intensity: 2.7 dBZ<br>                     • Category: CLEAR<br>                     • Conditions: Moderate Rain<br>                     <br>                     <b>⏰ Temporal Analysis:</b><br>                     • Weather Data Age: 3.9 minutes<br>                     • Data Status: CURRENT<br>                     • Confidence: HIGH<br>                     • Weather Frame: 2025-06-16 13:30:00<br>                     <br>                     <b>Assessment:</b><br>                     CLEAR CONDITIONS (Data: 3.9min old)                 </div>                 </div>`)[0];
+                popup_817a9051aa86f55b3b2d08bc96b73ecd.setContent(html_fec036b9ad93a002bf8862c1c0da9818);
+            
+        
+
+        marker_bd2931426e3ede7c2db2c74fb2fd7bbf.bindPopup(popup_817a9051aa86f55b3b2d08bc96b73ecd)
+        ;
+
+        
+    
+    
+            marker_bd2931426e3ede7c2db2c74fb2fd7bbf.bindTooltip(
+                `<div>
+                     SNY041 - Data: 3.9min old
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_bd2931426e3ede7c2db2c74fb2fd7bbf.setIcon(icon_7874af20920fae22a6b2b3a21a3c602b);
+            
+    
+            var marker_bbfb87fa0aa62b4e132fe88a499a83c2 = L.marker(
+                [13.7016, 100.7388],
+                {
+}
+            ).addTo(map_80e0c93cb074c1621fc6c204dc1137fe);
+        
+    
+            var icon_ead76fc4d22a66a47809843a7bab0f72 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_829f59bffb3d2a132bb5e0e6457d61c7 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_81caebaf7528021ccdf235beae217dcd = $(`<div id="html_81caebaf7528021ccdf235beae217dcd" style="width: 100.0%; height: 100.0%;">                 <div style="width: 300px;">                     <h4><b>AAR743</b></h4>                     <hr>                     <b>Flight Info:</b><br>                     • Altitude: 200 ft<br>                     • Speed: 134 kts<br>                     • Distance to BKK: 2.5 km<br>                     <br>                     <b>Weather Analysis:</b><br>                     • Intensity: 0.0 dBZ<br>                     • Category: CLEAR<br>                     • Conditions: CLEAR<br>                     <br>                     <b>⏰ Temporal Analysis:</b><br>                     • Weather Data Age: 3.9 minutes<br>                     • Data Status: CURRENT<br>                     • Confidence: HIGH<br>                     • Weather Frame: 2025-06-16 13:30:00<br>                     <br>                     <b>Assessment:</b><br>                     CLEAR CONDITIONS (Data: 3.9min old)                 </div>                 </div>`)[0];
+                popup_829f59bffb3d2a132bb5e0e6457d61c7.setContent(html_81caebaf7528021ccdf235beae217dcd);
+            
+        
+
+        marker_bbfb87fa0aa62b4e132fe88a499a83c2.bindPopup(popup_829f59bffb3d2a132bb5e0e6457d61c7)
+        ;
+
+        
+    
+    
+            marker_bbfb87fa0aa62b4e132fe88a499a83c2.bindTooltip(
+                `<div>
+                     AAR743 - Data: 3.9min old
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_bbfb87fa0aa62b4e132fe88a499a83c2.setIcon(icon_ead76fc4d22a66a47809843a7bab0f72);
+            
+    
+            var marker_49be6e8ea65f790c7cf9cf31b6936e13 = L.marker(
+                [13.6602, 100.7528],
+                {
+}
+            ).addTo(map_80e0c93cb074c1621fc6c204dc1137fe);
+        
+    
+            var icon_abc6cc25b35c63f7da0981223da38e20 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_76ee3ebbfe42cb34bcd7f9797caa601c = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_fb969126edb490f9aec2eed46c2dad8b = $(`<div id="html_fb969126edb490f9aec2eed46c2dad8b" style="width: 100.0%; height: 100.0%;">                 <div style="width: 300px;">                     <h4><b>AIQ4501</b></h4>                     <hr>                     <b>Flight Info:</b><br>                     • Altitude: 700 ft<br>                     • Speed: 160 kts<br>                     • Distance to BKK: 2.4 km<br>                     <br>                     <b>Weather Analysis:</b><br>                     • Intensity: 0.0 dBZ<br>                     • Category: CLEAR<br>                     • Conditions: CLEAR<br>                     <br>                     <b>⏰ Temporal Analysis:</b><br>                     • Weather Data Age: 3.9 minutes<br>                     • Data Status: CURRENT<br>                     • Confidence: HIGH<br>                     • Weather Frame: 2025-06-16 13:30:00<br>                     <br>                     <b>Assessment:</b><br>                     CLEAR CONDITIONS (Data: 3.9min old)                 </div>                 </div>`)[0];
+                popup_76ee3ebbfe42cb34bcd7f9797caa601c.setContent(html_fb969126edb490f9aec2eed46c2dad8b);
+            
+        
+
+        marker_49be6e8ea65f790c7cf9cf31b6936e13.bindPopup(popup_76ee3ebbfe42cb34bcd7f9797caa601c)
+        ;
+
+        
+    
+    
+            marker_49be6e8ea65f790c7cf9cf31b6936e13.bindTooltip(
+                `<div>
+                     AIQ4501 - Data: 3.9min old
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_49be6e8ea65f790c7cf9cf31b6936e13.setIcon(icon_abc6cc25b35c63f7da0981223da38e20);
+            
+    
+            var marker_8d3c37d97d172f947b5ae40b2b2a0a75 = L.marker(
+                [13.6811, 100.7475],
+                {
+}
+            ).addTo(map_80e0c93cb074c1621fc6c204dc1137fe);
+        
+    
+            var icon_b31009bc5b44b5ee7157422194f58ab8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_166221197dfd8369d618c11a13523107 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4ae13015abe65d9bc36db3618cf00662 = $(`<div id="html_4ae13015abe65d9bc36db3618cf00662" style="width: 100.0%; height: 100.0%;">Suvarnabhumi Airport (BKK)</div>`)[0];
+                popup_166221197dfd8369d618c11a13523107.setContent(html_4ae13015abe65d9bc36db3618cf00662);
+            
+        
+
+        marker_8d3c37d97d172f947b5ae40b2b2a0a75.bindPopup(popup_166221197dfd8369d618c11a13523107)
+        ;
+
+        
+    
+    
+            marker_8d3c37d97d172f947b5ae40b2b2a0a75.bindTooltip(
+                `<div>
+                     BKK Airport
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8d3c37d97d172f947b5ae40b2b2a0a75.setIcon(icon_b31009bc5b44b5ee7157422194f58ab8);
+            
+    
+            map_80e0c93cb074c1621fc6c204dc1137fe.fitBounds(
+                [[13.2, 100.0], [14.2, 101.2]],
+                {}
+            );
+        
+</script>
+</html>

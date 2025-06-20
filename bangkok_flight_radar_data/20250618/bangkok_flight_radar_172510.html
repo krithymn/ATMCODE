@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_36a67d733568f60646cdbd469473dd68 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+                <div style="position: fixed; 
+                            top: 15px; 
+                            left: 50%; 
+                            transform: translateX(-50%);
+                            width: 500px; 
+                            height: 100px; 
+                            z-index:9999; 
+                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                            color: white;
+                            font-family: Arial, sans-serif;
+                            font-size: 18px;
+                            font-weight: bold;
+                            padding: 15px;
+                            border-radius: 15px;
+                            border: 3px solid #fff;
+                            text-align: center;
+                            box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                    ✈️ Bangkok Flight Weather Radar<br>
+                    <span style="font-size: 14px; font-weight: normal;">📅 2025-06-18 17:25:10</span><br>
+                    <span style="font-size: 12px; font-weight: normal;">🛰️ Flights: 10 | Safe: 70.0%</span><br>
+                    <span style="font-size: 10px; font-weight: normal;">📍 Real-time Flight & Weather Data</span>
+                </div>
+            
+    
+                <style>
+                    .leaflet-container {
+                        font-family: Arial, sans-serif;
+                    }
+                    .leaflet-popup-content {
+                        font-weight: bold;
+                    }
+                </style>
+            
+    
+            <div class="folium-map" id="map_36a67d733568f60646cdbd469473dd68" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_36a67d733568f60646cdbd469473dd68 = L.map(
+                "map_36a67d733568f60646cdbd469473dd68",
+                {
+                    center: [13.7563, 100.5018],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_5cac1c5262c84829ee707666435efe87 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_5cac1c5262c84829ee707666435efe87.addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+            var tile_layer_1f4848e3053e747108be2b4e080554fe = L.tileLayer(
+                "https://tilecache.rainviewer.com/v2/radar/1750234800/256/{z}/{x}/{y}/2/1_1.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "RainViewer | Thailand Weather Data",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 0.6,
+}
+
+            );
+        
+    
+            tile_layer_1f4848e3053e747108be2b4e080554fe.addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+            var rectangle_5cddecdb701da4dbb35d6355692e1ea6 = L.rectangle(
+                [[13.9, 100.6], [14.2, 100.9]],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+        var popup_4818da7c98d548b7f1f40f94a501dd08 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_057ed7695719c17aa9a189c2e1504419 = $(`<div id="html_057ed7695719c17aa9a189c2e1504419" style="width: 100.0%; height: 100.0%;">North Approach (ORANGE - 45 dBZ)</div>`)[0];
+                popup_4818da7c98d548b7f1f40f94a501dd08.setContent(html_057ed7695719c17aa9a189c2e1504419);
+            
+        
+
+        rectangle_5cddecdb701da4dbb35d6355692e1ea6.bindPopup(popup_4818da7c98d548b7f1f40f94a501dd08)
+        ;
+
+        
+    
+    
+            var rectangle_03866e03d1723354a52950666a903cce = L.rectangle(
+                [[13.6, 101.0], [13.8, 101.2]],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+        var popup_48b0fce156be4aedb059cf011b68dcb0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a0df278e79e98ab74ab7bff8d59aedf9 = $(`<div id="html_a0df278e79e98ab74ab7bff8d59aedf9" style="width: 100.0%; height: 100.0%;">East Sector (RED - 55 dBZ)</div>`)[0];
+                popup_48b0fce156be4aedb059cf011b68dcb0.setContent(html_a0df278e79e98ab74ab7bff8d59aedf9);
+            
+        
+
+        rectangle_03866e03d1723354a52950666a903cce.bindPopup(popup_48b0fce156be4aedb059cf011b68dcb0)
+        ;
+
+        
+    
+    
+            var rectangle_4a342229796bc8ea45bb59f781665da1 = L.rectangle(
+                [[13.3, 100.3], [13.5, 100.6]],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+        var popup_7e14a9d4bdf6860d1a025e2f308a158b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_de35b25acbafcb1d944ada2cc67b1470 = $(`<div id="html_de35b25acbafcb1d944ada2cc67b1470" style="width: 100.0%; height: 100.0%;">Southwest (GREEN - 25 dBZ)</div>`)[0];
+                popup_7e14a9d4bdf6860d1a025e2f308a158b.setContent(html_de35b25acbafcb1d944ada2cc67b1470);
+            
+        
+
+        rectangle_4a342229796bc8ea45bb59f781665da1.bindPopup(popup_7e14a9d4bdf6860d1a025e2f308a158b)
+        ;
+
+        
+    
+    
+            var rectangle_d8a24129ae398922770e1ed706779b36 = L.rectangle(
+                [[13.5, 100.6], [13.9, 100.9]],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+        var popup_832252dbbb8dec437d34959d9b9879ee = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1ec267345d006ccd20aa758c728b857a = $(`<div id="html_1ec267345d006ccd20aa758c728b857a" style="width: 100.0%; height: 100.0%;">Airport Area (GREEN - 15 dBZ)</div>`)[0];
+                popup_832252dbbb8dec437d34959d9b9879ee.setContent(html_1ec267345d006ccd20aa758c728b857a);
+            
+        
+
+        rectangle_d8a24129ae398922770e1ed706779b36.bindPopup(popup_832252dbbb8dec437d34959d9b9879ee)
+        ;
+
+        
+    
+    
+            var marker_c6c8a1aa9e9c3cb7e468511682cd6eb7 = L.marker(
+                [13.9664, 100.8533],
+                {
+}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+            var icon_45c1e7d0ecb144e2127d7c1dbbec7d04 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_784e1f00656c001f7536fdf5b68ed627 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ef60797553680ca367993637ba695cd2 = $(`<div id="html_ef60797553680ca367993637ba695cd2" style="width: 100.0%; height: 100.0%;">                     <b>THA623</b><br>                     Altitude: 4750 ft<br>                     Speed: 197 kts<br>                     Distance to BKK: 33.7 km<br>                     Weather: ORANGE (45 dBZ)<br>                     Action: CONTINUED_WITH_CAUTION<br>                     Classification: RISKY_PENETRATION                     </div>`)[0];
+                popup_784e1f00656c001f7536fdf5b68ed627.setContent(html_ef60797553680ca367993637ba695cd2);
+            
+        
+
+        marker_c6c8a1aa9e9c3cb7e468511682cd6eb7.bindPopup(popup_784e1f00656c001f7536fdf5b68ed627)
+        ;
+
+        
+    
+    
+            marker_c6c8a1aa9e9c3cb7e468511682cd6eb7.bindTooltip(
+                `<div>
+                     THA623 - 4750ft
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c6c8a1aa9e9c3cb7e468511682cd6eb7.setIcon(icon_45c1e7d0ecb144e2127d7c1dbbec7d04);
+            
+    
+            var marker_1fc3a35df0e34fd71dbccc536c215ad7 = L.marker(
+                [14.1736, 100.6508],
+                {
+}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+            var icon_37f6d022c527ea852d0386a06772866f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_87a60386632e51a9764528c6d819a687 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b172ed5f377570f30d93a784cc1d0b78 = $(`<div id="html_b172ed5f377570f30d93a784cc1d0b78" style="width: 100.0%; height: 100.0%;">                     <b>BKP218</b><br>                     Altitude: 9075 ft<br>                     Speed: 288 kts<br>                     Distance to BKK: 55.7 km<br>                     Weather: ORANGE (45 dBZ)<br>                     Action: CONTINUED_WITH_CAUTION<br>                     Classification: RISKY_PENETRATION                     </div>`)[0];
+                popup_87a60386632e51a9764528c6d819a687.setContent(html_b172ed5f377570f30d93a784cc1d0b78);
+            
+        
+
+        marker_1fc3a35df0e34fd71dbccc536c215ad7.bindPopup(popup_87a60386632e51a9764528c6d819a687)
+        ;
+
+        
+    
+    
+            marker_1fc3a35df0e34fd71dbccc536c215ad7.bindTooltip(
+                `<div>
+                     BKP218 - 9075ft
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1fc3a35df0e34fd71dbccc536c215ad7.setIcon(icon_37f6d022c527ea852d0386a06772866f);
+            
+    
+            var marker_ad13556cc2cd367f9c8e577bdc642ca1 = L.marker(
+                [13.8195, 100.7948],
+                {
+}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+            var icon_59bcfa30447f337f61ac0b6edb313238 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5cb56567bc745b253c719f06e0f7165b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_eb7ca36272f6b65fb4fac3e218d780cd = $(`<div id="html_eb7ca36272f6b65fb4fac3e218d780cd" style="width: 100.0%; height: 100.0%;">                     <b>BKP136</b><br>                     Altitude: 2625 ft<br>                     Speed: 191 kts<br>                     Distance to BKK: 16.2 km<br>                     Weather: GREEN (15 dBZ)<br>                     Action: CONTINUED_NORMAL<br>                     Classification: COMPLIANT_GO_THROUGH                     </div>`)[0];
+                popup_5cb56567bc745b253c719f06e0f7165b.setContent(html_eb7ca36272f6b65fb4fac3e218d780cd);
+            
+        
+
+        marker_ad13556cc2cd367f9c8e577bdc642ca1.bindPopup(popup_5cb56567bc745b253c719f06e0f7165b)
+        ;
+
+        
+    
+    
+            marker_ad13556cc2cd367f9c8e577bdc642ca1.bindTooltip(
+                `<div>
+                     BKP136 - 2625ft
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ad13556cc2cd367f9c8e577bdc642ca1.setIcon(icon_59bcfa30447f337f61ac0b6edb313238);
+            
+    
+            var marker_caa5f789a1d0c7cb24a0b8da1e1647d0 = L.marker(
+                [13.6975, 100.7626],
+                {
+}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+            var icon_fe9c90d6e1ef7bbbfdc04c09abce4d7a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8562fca91500c5d854c8bf1e405e162e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fcea7e14cc3788073987ca4b01a461df = $(`<div id="html_fcea7e14cc3788073987ca4b01a461df" style="width: 100.0%; height: 100.0%;">                     <b>TVJ111</b><br>                     Altitude: 375 ft<br>                     Speed: 132 kts<br>                     Distance to BKK: 2.4 km<br>                     Weather: GREEN (15 dBZ)<br>                     Action: CONTINUED_NORMAL<br>                     Classification: COMPLIANT_GO_THROUGH                     </div>`)[0];
+                popup_8562fca91500c5d854c8bf1e405e162e.setContent(html_fcea7e14cc3788073987ca4b01a461df);
+            
+        
+
+        marker_caa5f789a1d0c7cb24a0b8da1e1647d0.bindPopup(popup_8562fca91500c5d854c8bf1e405e162e)
+        ;
+
+        
+    
+    
+            marker_caa5f789a1d0c7cb24a0b8da1e1647d0.bindTooltip(
+                `<div>
+                     TVJ111 - 375ft
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_caa5f789a1d0c7cb24a0b8da1e1647d0.setIcon(icon_fe9c90d6e1ef7bbbfdc04c09abce4d7a);
+            
+    
+            var marker_b4c646b6438c97803b8db56321609b93 = L.marker(
+                [13.6968, 100.7624],
+                {
+}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+            var icon_61f0ab94bfea545dfd8526dcb15baf49 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0bbc887e221c4fe92507f9c5314f9baf = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_79fb9a144db82a18ff272f2dfbdeade6 = $(`<div id="html_79fb9a144db82a18ff272f2dfbdeade6" style="width: 100.0%; height: 100.0%;">                     <b>TVJ2303</b><br>                     Altitude: 350 ft<br>                     Speed: 132 kts<br>                     Distance to BKK: 2.4 km<br>                     Weather: GREEN (15 dBZ)<br>                     Action: CONTINUED_NORMAL<br>                     Classification: COMPLIANT_GO_THROUGH                     </div>`)[0];
+                popup_0bbc887e221c4fe92507f9c5314f9baf.setContent(html_79fb9a144db82a18ff272f2dfbdeade6);
+            
+        
+
+        marker_b4c646b6438c97803b8db56321609b93.bindPopup(popup_0bbc887e221c4fe92507f9c5314f9baf)
+        ;
+
+        
+    
+    
+            marker_b4c646b6438c97803b8db56321609b93.bindTooltip(
+                `<div>
+                     TVJ2303 - 350ft
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b4c646b6438c97803b8db56321609b93.setIcon(icon_61f0ab94bfea545dfd8526dcb15baf49);
+            
+    
+            var marker_636838ca80b64708db7b24edf79aeaaa = L.marker(
+                [13.8601, 100.5593],
+                {
+}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+            var icon_624f4f9a6d26f9451097e6e12eedf078 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ac0853999c451bb40a7fb38da1361978 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_980fcc58e33de160cbd4a85f635e2dcb = $(`<div id="html_980fcc58e33de160cbd4a85f635e2dcb" style="width: 100.0%; height: 100.0%;">                     <b>TLM714</b><br>                     Altitude: 2375 ft<br>                     Speed: 228 kts<br>                     Distance to BKK: 28.4 km<br>                     Weather: CLEAR (0 dBZ)<br>                     Action: CONTINUED_NORMAL<br>                     Classification: COMPLIANT_GO_THROUGH                     </div>`)[0];
+                popup_ac0853999c451bb40a7fb38da1361978.setContent(html_980fcc58e33de160cbd4a85f635e2dcb);
+            
+        
+
+        marker_636838ca80b64708db7b24edf79aeaaa.bindPopup(popup_ac0853999c451bb40a7fb38da1361978)
+        ;
+
+        
+    
+    
+            marker_636838ca80b64708db7b24edf79aeaaa.bindTooltip(
+                `<div>
+                     TLM714 - 2375ft
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_636838ca80b64708db7b24edf79aeaaa.setIcon(icon_624f4f9a6d26f9451097e6e12eedf078);
+            
+    
+            var marker_dc57b162570b46ca78badb2c73f7be07 = L.marker(
+                [13.866, 100.9685],
+                {
+}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+            var icon_163d32e1d430b04e8aa1010782044429 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0952a721100865e8ac6d977d7c64423a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_01da2df1ff4729ddf82a4b092fb5ed08 = $(`<div id="html_01da2df1ff4729ddf82a4b092fb5ed08" style="width: 100.0%; height: 100.0%;">                     <b>CSN8323</b><br>                     Altitude: 7625 ft<br>                     Speed: 249 kts<br>                     Distance to BKK: 31.5 km<br>                     Weather: CLEAR (0 dBZ)<br>                     Action: CONTINUED_NORMAL<br>                     Classification: COMPLIANT_GO_THROUGH                     </div>`)[0];
+                popup_0952a721100865e8ac6d977d7c64423a.setContent(html_01da2df1ff4729ddf82a4b092fb5ed08);
+            
+        
+
+        marker_dc57b162570b46ca78badb2c73f7be07.bindPopup(popup_0952a721100865e8ac6d977d7c64423a)
+        ;
+
+        
+    
+    
+            marker_dc57b162570b46ca78badb2c73f7be07.bindTooltip(
+                `<div>
+                     CSN8323 - 7625ft
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_dc57b162570b46ca78badb2c73f7be07.setIcon(icon_163d32e1d430b04e8aa1010782044429);
+            
+    
+            var marker_239743484f390e9f05b1d5bffb6bd099 = L.marker(
+                [13.6971, 100.7624],
+                {
+}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+            var icon_31f54ba4f01a32fb85edcfcebfe8027e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_22b473cbbe3ee72dbd989541e87fff7d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_59997828246638ab053e08ae017e8f51 = $(`<div id="html_59997828246638ab053e08ae017e8f51" style="width: 100.0%; height: 100.0%;">                     <b>AIQ4119</b><br>                     Altitude: 350 ft<br>                     Speed: 129 kts<br>                     Distance to BKK: 2.4 km<br>                     Weather: GREEN (15 dBZ)<br>                     Action: CONTINUED_NORMAL<br>                     Classification: COMPLIANT_GO_THROUGH                     </div>`)[0];
+                popup_22b473cbbe3ee72dbd989541e87fff7d.setContent(html_59997828246638ab053e08ae017e8f51);
+            
+        
+
+        marker_239743484f390e9f05b1d5bffb6bd099.bindPopup(popup_22b473cbbe3ee72dbd989541e87fff7d)
+        ;
+
+        
+    
+    
+            marker_239743484f390e9f05b1d5bffb6bd099.bindTooltip(
+                `<div>
+                     AIQ4119 - 350ft
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_239743484f390e9f05b1d5bffb6bd099.setIcon(icon_31f54ba4f01a32fb85edcfcebfe8027e);
+            
+    
+            var marker_570560898faf197c8c80830e169b48c0 = L.marker(
+                [13.9248, 100.7975],
+                {
+}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+            var icon_190c2972a865ce55a5cf0218c2400b9d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_fb0d790d232c75eedcb858ad3cd0b653 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cac4ba163587feefe79d16b82e34ddd7 = $(`<div id="html_cac4ba163587feefe79d16b82e34ddd7" style="width: 100.0%; height: 100.0%;">                     <b>CSH833</b><br>                     Altitude: 4375 ft<br>                     Speed: 193 kts<br>                     Distance to BKK: 27.6 km<br>                     Weather: ORANGE (45 dBZ)<br>                     Action: CONTINUED_WITH_CAUTION<br>                     Classification: RISKY_PENETRATION                     </div>`)[0];
+                popup_fb0d790d232c75eedcb858ad3cd0b653.setContent(html_cac4ba163587feefe79d16b82e34ddd7);
+            
+        
+
+        marker_570560898faf197c8c80830e169b48c0.bindPopup(popup_fb0d790d232c75eedcb858ad3cd0b653)
+        ;
+
+        
+    
+    
+            marker_570560898faf197c8c80830e169b48c0.bindTooltip(
+                `<div>
+                     CSH833 - 4375ft
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_570560898faf197c8c80830e169b48c0.setIcon(icon_190c2972a865ce55a5cf0218c2400b9d);
+            
+    
+            var marker_3bffbe6f90e6d2d1e111f7f460244817 = L.marker(
+                [13.7402, 100.749],
+                {
+}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+            var icon_a67d75c60db4e9905a04b281fab30e83 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_10c0866ee35422dd76dd273f8122912a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4dd6cd15d67083d60f355783d2b6b059 = $(`<div id="html_4dd6cd15d67083d60f355783d2b6b059" style="width: 100.0%; height: 100.0%;">                     <b>KQA886</b><br>                     Altitude: 1025 ft<br>                     Speed: 143 kts<br>                     Distance to BKK: 6.6 km<br>                     Weather: GREEN (15 dBZ)<br>                     Action: CONTINUED_NORMAL<br>                     Classification: COMPLIANT_GO_THROUGH                     </div>`)[0];
+                popup_10c0866ee35422dd76dd273f8122912a.setContent(html_4dd6cd15d67083d60f355783d2b6b059);
+            
+        
+
+        marker_3bffbe6f90e6d2d1e111f7f460244817.bindPopup(popup_10c0866ee35422dd76dd273f8122912a)
+        ;
+
+        
+    
+    
+            marker_3bffbe6f90e6d2d1e111f7f460244817.bindTooltip(
+                `<div>
+                     KQA886 - 1025ft
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3bffbe6f90e6d2d1e111f7f460244817.setIcon(icon_a67d75c60db4e9905a04b281fab30e83);
+            
+    
+            var marker_b0d64e61f8a72823c97d5fa520cb7987 = L.marker(
+                [13.6811, 100.7475],
+                {
+}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+            var icon_832b6c95b8cffbe1d21c319fbc9335cf = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a9de75f2cdeebcc8e07f34c3716090ad = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0c20572b56f50ecbf7696ad88eff9d09 = $(`<div id="html_0c20572b56f50ecbf7696ad88eff9d09" style="width: 100.0%; height: 100.0%;">Suvarnabhumi Airport (BKK)</div>`)[0];
+                popup_a9de75f2cdeebcc8e07f34c3716090ad.setContent(html_0c20572b56f50ecbf7696ad88eff9d09);
+            
+        
+
+        marker_b0d64e61f8a72823c97d5fa520cb7987.bindPopup(popup_a9de75f2cdeebcc8e07f34c3716090ad)
+        ;
+
+        
+    
+    
+            marker_b0d64e61f8a72823c97d5fa520cb7987.bindTooltip(
+                `<div>
+                     BKK Airport
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b0d64e61f8a72823c97d5fa520cb7987.setIcon(icon_832b6c95b8cffbe1d21c319fbc9335cf);
+            
+    
+            var circle_marker_77f3d8f0271f331650af2ceb9a2d8957 = L.circleMarker(
+                [13.7563, 100.5018],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+        var popup_244c62f26d9de55255df3b560f8c346e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4d71f2f692649a76cf7b44bb95c9e489 = $(`<div id="html_4d71f2f692649a76cf7b44bb95c9e489" style="width: 100.0%; height: 100.0%;"><b>Bangkok Downtown</b></div>`)[0];
+                popup_244c62f26d9de55255df3b560f8c346e.setContent(html_4d71f2f692649a76cf7b44bb95c9e489);
+            
+        
+
+        circle_marker_77f3d8f0271f331650af2ceb9a2d8957.bindPopup(popup_244c62f26d9de55255df3b560f8c346e)
+        ;
+
+        
+    
+    
+            circle_marker_77f3d8f0271f331650af2ceb9a2d8957.bindTooltip(
+                `<div>
+                     Bangkok Downtown
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_86d3b5574914d34da9f5863bfb52cb7b = L.circleMarker(
+                [13.69, 100.75],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+        var popup_7f12b47ab3c257be50e779a301860704 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8a4028ce6a7ba31907f6d9d182a8973a = $(`<div id="html_8a4028ce6a7ba31907f6d9d182a8973a" style="width: 100.0%; height: 100.0%;"><b>BKK Airport</b></div>`)[0];
+                popup_7f12b47ab3c257be50e779a301860704.setContent(html_8a4028ce6a7ba31907f6d9d182a8973a);
+            
+        
+
+        circle_marker_86d3b5574914d34da9f5863bfb52cb7b.bindPopup(popup_7f12b47ab3c257be50e779a301860704)
+        ;
+
+        
+    
+    
+            circle_marker_86d3b5574914d34da9f5863bfb52cb7b.bindTooltip(
+                `<div>
+                     BKK Airport
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_684e63f36d1d5c1d98b37688506af19b = L.circleMarker(
+                [13.9126, 100.6071],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+        var popup_e116667c2b56745d6f2313383b4b69e9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_962b349d7beb6169824f9dc42e87233f = $(`<div id="html_962b349d7beb6169824f9dc42e87233f" style="width: 100.0%; height: 100.0%;"><b>Don Mueang Airport</b></div>`)[0];
+                popup_e116667c2b56745d6f2313383b4b69e9.setContent(html_962b349d7beb6169824f9dc42e87233f);
+            
+        
+
+        circle_marker_684e63f36d1d5c1d98b37688506af19b.bindPopup(popup_e116667c2b56745d6f2313383b4b69e9)
+        ;
+
+        
+    
+    
+            circle_marker_684e63f36d1d5c1d98b37688506af19b.bindTooltip(
+                `<div>
+                     Don Mueang Airport
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ffebc3a2ec3f35235f3a2b4e6e667d43 = L.circleMarker(
+                [13.599, 100.5998],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+        var popup_ddbf0a4631fc395d3361393d3b6a18c9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fcd371fbc179c0e19df5c787b5438e5f = $(`<div id="html_fcd371fbc179c0e19df5c787b5438e5f" style="width: 100.0%; height: 100.0%;"><b>Samut Prakan</b></div>`)[0];
+                popup_ddbf0a4631fc395d3361393d3b6a18c9.setContent(html_fcd371fbc179c0e19df5c787b5438e5f);
+            
+        
+
+        circle_marker_ffebc3a2ec3f35235f3a2b4e6e667d43.bindPopup(popup_ddbf0a4631fc395d3361393d3b6a18c9)
+        ;
+
+        
+    
+    
+            circle_marker_ffebc3a2ec3f35235f3a2b4e6e667d43.bindTooltip(
+                `<div>
+                     Samut Prakan
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4fad91a36889ec944e8742ccdf0d7c7a = L.circleMarker(
+                [13.8621, 100.5144],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+        var popup_41131252815a4e6ff61568e06898282d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_68ac1130d797a00d96b0453a5718ecfa = $(`<div id="html_68ac1130d797a00d96b0453a5718ecfa" style="width: 100.0%; height: 100.0%;"><b>Nonthaburi</b></div>`)[0];
+                popup_41131252815a4e6ff61568e06898282d.setContent(html_68ac1130d797a00d96b0453a5718ecfa);
+            
+        
+
+        circle_marker_4fad91a36889ec944e8742ccdf0d7c7a.bindPopup(popup_41131252815a4e6ff61568e06898282d)
+        ;
+
+        
+    
+    
+            circle_marker_4fad91a36889ec944e8742ccdf0d7c7a.bindTooltip(
+                `<div>
+                     Nonthaburi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_767dbebda2ab0e98e7edeb0bee52fc8e = L.circleMarker(
+                [14.0208, 100.525],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "darkgreen", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(map_36a67d733568f60646cdbd469473dd68);
+        
+    
+        var popup_00fb009706dd2056af16e5d5b8c9c2de = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_29fa0e0a5248ef8522bab837bd5a1bfb = $(`<div id="html_29fa0e0a5248ef8522bab837bd5a1bfb" style="width: 100.0%; height: 100.0%;"><b>Pathum Thani</b></div>`)[0];
+                popup_00fb009706dd2056af16e5d5b8c9c2de.setContent(html_29fa0e0a5248ef8522bab837bd5a1bfb);
+            
+        
+
+        circle_marker_767dbebda2ab0e98e7edeb0bee52fc8e.bindPopup(popup_00fb009706dd2056af16e5d5b8c9c2de)
+        ;
+
+        
+    
+    
+            circle_marker_767dbebda2ab0e98e7edeb0bee52fc8e.bindTooltip(
+                `<div>
+                     Pathum Thani
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            map_36a67d733568f60646cdbd469473dd68.fitBounds(
+                [[13.2, 100.0], [14.2, 101.2]],
+                {}
+            );
+        
+</script>
+</html>
