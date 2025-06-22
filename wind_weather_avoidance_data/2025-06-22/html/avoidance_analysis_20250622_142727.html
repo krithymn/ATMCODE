@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_1ffd8baa81438bf49c3bf6d7f728abed {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+        <div style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
+                    background: #2c3e50; color: white; padding: 20px;
+                    border-radius: 10px; z-index: 1000; text-align: center;">
+            <h3 style="margin: 0;">Wind & Weather Avoidance Analysis</h3>
+            <p style="margin: 5px 0; font-size: 14px;">2025-06-22 14:27:27</p>
+            <div style="margin-top: 10px; font-size: 12px;">
+        
+                <div style="display: inline-block; margin: 0 10px;">
+                    <b>HEADWIND:</b> 12.5% avoiding
+                    (1/8)
+                </div>
+            
+                <div style="display: inline-block; margin: 0 10px;">
+                    <b>CROSSWIND:</b> 0.0% avoiding
+                    (0/2)
+                </div>
+            
+                <div style="display: inline-block; margin: 0 10px;">
+                    <b>TAILWIND:</b> 0.0% avoiding
+                    (0/2)
+                </div>
+            
+            </div>
+        </div>
+        
+    
+        <div style="position: fixed; bottom: 20px; right: 20px; 
+                    background: white; padding: 15px; border: 2px solid black;
+                    border-radius: 5px; z-index: 1000;">
+            <b>Legend:</b><br>
+            🔴 Avoiding Weather<br>
+            🟠 In Weather<br>
+            🟢 Clear Path<br>
+            --- Avoidance Route<br>
+            — Direct Route
+        </div>
+        
+    
+            <div class="folium-map" id="map_1ffd8baa81438bf49c3bf6d7f728abed" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_1ffd8baa81438bf49c3bf6d7f728abed = L.map(
+                "map_1ffd8baa81438bf49c3bf6d7f728abed",
+                {
+                    center: [13.6811, 100.7475],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_a355a949dcd3a2d8c4df39ad0bfd2951 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_a355a949dcd3a2d8c4df39ad0bfd2951.addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var tile_layer_6236155f834bc6132b661639572cc1d6 = L.tileLayer(
+                "https://tilecache.rainviewer.com/v2/radar/1750569600/256/{z}/{x}/{y}/2/1_1.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "RainViewer",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 0.6,
+}
+
+            );
+        
+    
+            tile_layer_6236155f834bc6132b661639572cc1d6.addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var circle_93c7b3a2a8efc9a6aa16b6ab653e9000 = L.circle(
+                [13.8, 100.4],
+                {"bubblingMouseEvents": true, "color": "yellow", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "yellow", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 25000, "stroke": true, "weight": 3}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+        var popup_cb43b86f6c39d117b9fa7b33813cfe8a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2d9a4d4b534aa6f23503d7ebf61ad3e9 = $(`<div id="html_2d9a4d4b534aa6f23503d7ebf61ad3e9" style="width: 100.0%; height: 100.0%;">Light Rain</div>`)[0];
+                popup_cb43b86f6c39d117b9fa7b33813cfe8a.setContent(html_2d9a4d4b534aa6f23503d7ebf61ad3e9);
+            
+        
+
+        circle_93c7b3a2a8efc9a6aa16b6ab653e9000.bindPopup(popup_cb43b86f6c39d117b9fa7b33813cfe8a)
+        ;
+
+        
+    
+    
+            var circle_e80875462810d0cfe3df5d0f3f91e332 = L.circle(
+                [14.1, 100.8],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 30000, "stroke": true, "weight": 3}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+        var popup_2ff1447e35c729a26fdda076aa85dd6c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bc2f750fa9dd1f81a799a899f920ccc2 = $(`<div id="html_bc2f750fa9dd1f81a799a899f920ccc2" style="width: 100.0%; height: 100.0%;">Moderate Rain</div>`)[0];
+                popup_2ff1447e35c729a26fdda076aa85dd6c.setContent(html_bc2f750fa9dd1f81a799a899f920ccc2);
+            
+        
+
+        circle_e80875462810d0cfe3df5d0f3f91e332.bindPopup(popup_2ff1447e35c729a26fdda076aa85dd6c)
+        ;
+
+        
+    
+    
+            var circle_2e7a4266b4a0062d6b74383c9684ab2a = L.circle(
+                [13.4, 101.0],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20000, "stroke": true, "weight": 3}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+        var popup_5b7a0e6db5b036f50885e78d9dfecd3f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_abfacf5df0e3ef8b7900a0c39d40f697 = $(`<div id="html_abfacf5df0e3ef8b7900a0c39d40f697" style="width: 100.0%; height: 100.0%;">Heavy Rain</div>`)[0];
+                popup_5b7a0e6db5b036f50885e78d9dfecd3f.setContent(html_abfacf5df0e3ef8b7900a0c39d40f697);
+            
+        
+
+        circle_2e7a4266b4a0062d6b74383c9684ab2a.bindPopup(popup_5b7a0e6db5b036f50885e78d9dfecd3f)
+        ;
+
+        
+    
+    
+            var circle_abd0cbce678548d264eb3589cb873068 = L.circle(
+                [13.9, 100.6],
+                {"bubblingMouseEvents": true, "color": "darkred", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "darkred", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15000, "stroke": true, "weight": 3}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+        var popup_17f8f8053ce3eb4bd84b538b43d5da74 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6e6be2b249d66b2cefead8964b495a4a = $(`<div id="html_6e6be2b249d66b2cefead8964b495a4a" style="width: 100.0%; height: 100.0%;">Thunderstorm</div>`)[0];
+                popup_17f8f8053ce3eb4bd84b538b43d5da74.setContent(html_6e6be2b249d66b2cefead8964b495a4a);
+            
+        
+
+        circle_abd0cbce678548d264eb3589cb873068.bindPopup(popup_17f8f8053ce3eb4bd84b538b43d5da74)
+        ;
+
+        
+    
+    
+            var marker_9e0e8c3e9ffd9f77c388b9400cf10991 = L.marker(
+                [13.7836, 100.8727],
+                {
+}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var icon_d3dddf51f30a35b66ec5443704f94d11 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_14429d98f0afae664c6a5a125b611099 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_272f2a192f7d606f804ce642c20d3b7a = $(`<div id="html_272f2a192f7d606f804ce642c20d3b7a" style="width: 100.0%; height: 100.0%;">             <div style="width: 300px;">                 <h4>BKP130</h4>                 <hr>                 <b>Flight Info:</b><br>                 • Altitude: 7225 ft<br>                 • Speed: 255 kts<br>                 • Distance to BKK: 17.7 km<br>                 <br>                 <b>Wind Analysis:</b><br>                 • Condition: STRONG_HEADWIND<br>                 • Category: HEADWIND<br>                 • Headwind: 5.1 m/s<br>                 • Crosswind: 4.3 m/s<br>                 <br>                 <b>Weather Status:</b><br>                 • Intensity: 0.0<br>                 • Category: CLEAR<br>                 • In Weather: NO<br>                 <br>                 <b>Avoidance Analysis:</b><br>                 • Avoiding: NO<br>                 • Heading Deviation: 145.1°<br>                 • Behavior: NORMAL_APPROACH             </div>             </div>`)[0];
+                popup_14429d98f0afae664c6a5a125b611099.setContent(html_272f2a192f7d606f804ce642c20d3b7a);
+            
+        
+
+        marker_9e0e8c3e9ffd9f77c388b9400cf10991.bindPopup(popup_14429d98f0afae664c6a5a125b611099)
+        ;
+
+        
+    
+    
+            marker_9e0e8c3e9ffd9f77c388b9400cf10991.bindTooltip(
+                `<div>
+                     BKP130 - HEADWIND - NORMAL
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9e0e8c3e9ffd9f77c388b9400cf10991.setIcon(icon_d3dddf51f30a35b66ec5443704f94d11);
+            
+    
+            var poly_line_2796043c49bff33740f34725351d45e2 = L.polyline(
+                [[13.7836, 100.8727], [13.6811, 100.7475]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var marker_8fb2e6f1f1933d215c30541e415c76ab = L.marker(
+                [14.0832, 100.6947],
+                {
+}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var icon_c467257b58e36d4e930966e87a980f31 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "cloud",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ac73379639e7b7861d7af3a4def1efb8 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_ecf199bf62ac76c7d72a71089218f677 = $(`<div id="html_ecf199bf62ac76c7d72a71089218f677" style="width: 100.0%; height: 100.0%;">             <div style="width: 300px;">                 <h4>BKP452</h4>                 <hr>                 <b>Flight Info:</b><br>                 • Altitude: 3175 ft<br>                 • Speed: 182 kts<br>                 • Distance to BKK: 45.1 km<br>                 <br>                 <b>Wind Analysis:</b><br>                 • Condition: STRONG_HEADWIND<br>                 • Category: HEADWIND<br>                 • Headwind: 6.4 m/s<br>                 • Crosswind: 2.0 m/s<br>                 <br>                 <b>Weather Status:</b><br>                 • Intensity: 27.7<br>                 • Category: LIGHT<br>                 • In Weather: YES<br>                 <br>                 <b>Avoidance Analysis:</b><br>                 • Avoiding: NO<br>                 • Heading Deviation: 4.8°<br>                 • Behavior: NORMAL_APPROACH             </div>             </div>`)[0];
+                popup_ac73379639e7b7861d7af3a4def1efb8.setContent(html_ecf199bf62ac76c7d72a71089218f677);
+            
+        
+
+        marker_8fb2e6f1f1933d215c30541e415c76ab.bindPopup(popup_ac73379639e7b7861d7af3a4def1efb8)
+        ;
+
+        
+    
+    
+            marker_8fb2e6f1f1933d215c30541e415c76ab.bindTooltip(
+                `<div>
+                     BKP452 - HEADWIND - NORMAL
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8fb2e6f1f1933d215c30541e415c76ab.setIcon(icon_c467257b58e36d4e930966e87a980f31);
+            
+    
+            var poly_line_63b211c7e97b7464d0ccf6d3324d6998 = L.polyline(
+                [[14.0832, 100.6947], [13.6811, 100.7475]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var marker_16856f28077a76549c2255aed74b0605 = L.marker(
+                [13.7433, 100.75],
+                {
+}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var icon_d3b4c5544d4d056398d3eef951633c07 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d4eb6accad294956aca5f355e50b5095 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_6bb0561fcad5d853d59bb48154869eee = $(`<div id="html_6bb0561fcad5d853d59bb48154869eee" style="width: 100.0%; height: 100.0%;">             <div style="width: 300px;">                 <h4>HYT9037</h4>                 <hr>                 <b>Flight Info:</b><br>                 • Altitude: 1075 ft<br>                 • Speed: 131 kts<br>                 • Distance to BKK: 6.9 km<br>                 <br>                 <b>Wind Analysis:</b><br>                 • Condition: STRONG_HEADWIND<br>                 • Category: HEADWIND<br>                 • Headwind: 6.6 m/s<br>                 • Crosswind: 0.9 m/s<br>                 <br>                 <b>Weather Status:</b><br>                 • Intensity: 0.0<br>                 • Category: CLEAR<br>                 • In Weather: NO<br>                 <br>                 <b>Avoidance Analysis:</b><br>                 • Avoiding: NO<br>                 • Heading Deviation: 12.8°<br>                 • Behavior: NORMAL_APPROACH             </div>             </div>`)[0];
+                popup_d4eb6accad294956aca5f355e50b5095.setContent(html_6bb0561fcad5d853d59bb48154869eee);
+            
+        
+
+        marker_16856f28077a76549c2255aed74b0605.bindPopup(popup_d4eb6accad294956aca5f355e50b5095)
+        ;
+
+        
+    
+    
+            marker_16856f28077a76549c2255aed74b0605.bindTooltip(
+                `<div>
+                     HYT9037 - HEADWIND - NORMAL
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_16856f28077a76549c2255aed74b0605.setIcon(icon_d3b4c5544d4d056398d3eef951633c07);
+            
+    
+            var poly_line_b437d76425c441ef67dd8c35fe36328b = L.polyline(
+                [[13.7433, 100.75], [13.6811, 100.7475]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var marker_7aea2680b4c20c3f838cfdb58cf03495 = L.marker(
+                [13.9956, 100.6512],
+                {
+}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var icon_d0ef365b5955c89cdb2c872a51bcf670 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "cloud",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8742c1bd863c5c7de7884f901a597bbc = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_346c1e97aa8942af3b763ef4cc4676a4 = $(`<div id="html_346c1e97aa8942af3b763ef4cc4676a4" style="width: 100.0%; height: 100.0%;">             <div style="width: 300px;">                 <h4>TLM759</h4>                 <hr>                 <b>Flight Info:</b><br>                 • Altitude: 1625 ft<br>                 • Speed: 146 kts<br>                 • Distance to BKK: 36.5 km<br>                 <br>                 <b>Wind Analysis:</b><br>                 • Condition: STRONG_HEADWIND<br>                 • Category: HEADWIND<br>                 • Headwind: 6.0 m/s<br>                 • Crosswind: 3.0 m/s<br>                 <br>                 <b>Weather Status:</b><br>                 • Intensity: 15.3<br>                 • Category: LIGHT<br>                 • In Weather: YES<br>                 <br>                 <b>Avoidance Analysis:</b><br>                 • Avoiding: NO<br>                 • Heading Deviation: 45.1°<br>                 • Behavior: NORMAL_APPROACH             </div>             </div>`)[0];
+                popup_8742c1bd863c5c7de7884f901a597bbc.setContent(html_346c1e97aa8942af3b763ef4cc4676a4);
+            
+        
+
+        marker_7aea2680b4c20c3f838cfdb58cf03495.bindPopup(popup_8742c1bd863c5c7de7884f901a597bbc)
+        ;
+
+        
+    
+    
+            marker_7aea2680b4c20c3f838cfdb58cf03495.bindTooltip(
+                `<div>
+                     TLM759 - HEADWIND - NORMAL
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7aea2680b4c20c3f838cfdb58cf03495.setIcon(icon_d0ef365b5955c89cdb2c872a51bcf670);
+            
+    
+            var poly_line_a703f515560e083af0bd8ec4cbbc934c = L.polyline(
+                [[13.9956, 100.6512], [13.6811, 100.7475]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var marker_f230792005d667c9a5dc8a71ecadb648 = L.marker(
+                [13.7038, 100.7394],
+                {
+}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var icon_0cb96b3acccd18d0133c7178dc358949 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3e2693f4b6607b8d23ea01dfd2c54b63 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_7143424a0464c31ef6ae9d4a523fe340 = $(`<div id="html_7143424a0464c31ef6ae9d4a523fe340" style="width: 100.0%; height: 100.0%;">             <div style="width: 300px;">                 <h4>CHH429</h4>                 <hr>                 <b>Flight Info:</b><br>                 • Altitude: 275 ft<br>                 • Speed: 143 kts<br>                 • Distance to BKK: 2.7 km<br>                 <br>                 <b>Wind Analysis:</b><br>                 • Condition: STRONG_HEADWIND<br>                 • Category: HEADWIND<br>                 • Headwind: 5.8 m/s<br>                 • Crosswind: 3.3 m/s<br>                 <br>                 <b>Weather Status:</b><br>                 • Intensity: 0.0<br>                 • Category: CLEAR<br>                 • In Weather: NO<br>                 <br>                 <b>Avoidance Analysis:</b><br>                 • Avoiding: NO<br>                 • Heading Deviation: 33.6°<br>                 • Behavior: NORMAL_APPROACH             </div>             </div>`)[0];
+                popup_3e2693f4b6607b8d23ea01dfd2c54b63.setContent(html_7143424a0464c31ef6ae9d4a523fe340);
+            
+        
+
+        marker_f230792005d667c9a5dc8a71ecadb648.bindPopup(popup_3e2693f4b6607b8d23ea01dfd2c54b63)
+        ;
+
+        
+    
+    
+            marker_f230792005d667c9a5dc8a71ecadb648.bindTooltip(
+                `<div>
+                     CHH429 - HEADWIND - NORMAL
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f230792005d667c9a5dc8a71ecadb648.setIcon(icon_0cb96b3acccd18d0133c7178dc358949);
+            
+    
+            var poly_line_1e036e3045314c781a38964cba555719 = L.polyline(
+                [[13.7038, 100.7394], [13.6811, 100.7475]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var marker_1cf05e5aab946a90f5c857a9502ff67d = L.marker(
+                [13.5729, 100.8671],
+                {
+}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var icon_23dfec75ef2939207ad0f03c08129419 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c4df0ce77c4b4a67ac2a16707217f90d = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_8f2e71c41e0cf984e7cfcef194cea6c2 = $(`<div id="html_8f2e71c41e0cf984e7cfcef194cea6c2" style="width: 100.0%; height: 100.0%;">             <div style="width: 300px;">                 <h4>CSZ310</h4>                 <hr>                 <b>Flight Info:</b><br>                 • Altitude: 5700 ft<br>                 • Speed: 283 kts<br>                 • Distance to BKK: 17.7 km<br>                 <br>                 <b>Wind Analysis:</b><br>                 • Condition: STRONG_CROSSWIND<br>                 • Category: CROSSWIND<br>                 • Headwind: -3.6 m/s<br>                 • Crosswind: 5.6 m/s<br>                 <br>                 <b>Weather Status:</b><br>                 • Intensity: 0.0<br>                 • Category: CLEAR<br>                 • In Weather: NO<br>                 <br>                 <b>Avoidance Analysis:</b><br>                 • Avoiding: NO<br>                 • Heading Deviation: 136.8°<br>                 • Behavior: NORMAL_APPROACH             </div>             </div>`)[0];
+                popup_c4df0ce77c4b4a67ac2a16707217f90d.setContent(html_8f2e71c41e0cf984e7cfcef194cea6c2);
+            
+        
+
+        marker_1cf05e5aab946a90f5c857a9502ff67d.bindPopup(popup_c4df0ce77c4b4a67ac2a16707217f90d)
+        ;
+
+        
+    
+    
+            marker_1cf05e5aab946a90f5c857a9502ff67d.bindTooltip(
+                `<div>
+                     CSZ310 - CROSSWIND - NORMAL
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1cf05e5aab946a90f5c857a9502ff67d.setIcon(icon_23dfec75ef2939207ad0f03c08129419);
+            
+    
+            var poly_line_255d33b9e18b1d202a6a215dd3ad8590 = L.polyline(
+                [[13.5729, 100.8671], [13.6811, 100.7475]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var marker_b01d1002885311ddc428357ee16a11c5 = L.marker(
+                [13.9984, 100.8011],
+                {
+}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var icon_c61378a6649ff91cbf6c1b40a5aca494 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "cloud",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_13421366ba39423b3924aef3f7ca1d15 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_07a54c67be8c6d62a9d68b22c2052ae7 = $(`<div id="html_07a54c67be8c6d62a9d68b22c2052ae7" style="width: 100.0%; height: 100.0%;">             <div style="width: 300px;">                 <h4>THA561</h4>                 <hr>                 <b>Flight Info:</b><br>                 • Altitude: 5200 ft<br>                 • Speed: 198 kts<br>                 • Distance to BKK: 35.8 km<br>                 <br>                 <b>Wind Analysis:</b><br>                 • Condition: STRONG_HEADWIND<br>                 • Category: HEADWIND<br>                 • Headwind: 6.7 m/s<br>                 • Crosswind: 0.1 m/s<br>                 <br>                 <b>Weather Status:</b><br>                 • Intensity: 28.1<br>                 • Category: LIGHT<br>                 • In Weather: YES<br>                 <br>                 <b>Avoidance Analysis:</b><br>                 • Avoiding: NO<br>                 • Heading Deviation: 28.1°<br>                 • Behavior: NORMAL_APPROACH             </div>             </div>`)[0];
+                popup_13421366ba39423b3924aef3f7ca1d15.setContent(html_07a54c67be8c6d62a9d68b22c2052ae7);
+            
+        
+
+        marker_b01d1002885311ddc428357ee16a11c5.bindPopup(popup_13421366ba39423b3924aef3f7ca1d15)
+        ;
+
+        
+    
+    
+            marker_b01d1002885311ddc428357ee16a11c5.bindTooltip(
+                `<div>
+                     THA561 - HEADWIND - NORMAL
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b01d1002885311ddc428357ee16a11c5.setIcon(icon_c61378a6649ff91cbf6c1b40a5aca494);
+            
+    
+            var poly_line_718b4bd8b7f3c8a3f0fac5d27aa5b0de = L.polyline(
+                [[13.9984, 100.8011], [13.6811, 100.7475]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var marker_4101bc7712857d87ee977595fc6d1717 = L.marker(
+                [13.9322, 100.6157],
+                {
+}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var icon_e75cb063b40f4f0eeafd15d33bd03407 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "exclamation-triangle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_40123d0e5085f50c8bd82b4a0d024709 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_099a3cace9decd172d53c64817687033 = $(`<div id="html_099a3cace9decd172d53c64817687033" style="width: 100.0%; height: 100.0%;">             <div style="width: 300px;">                 <h4>AIQ3255</h4>                 <hr>                 <b>Flight Info:</b><br>                 • Altitude: 350 ft<br>                 • Speed: 130 kts<br>                 • Distance to BKK: 31.3 km<br>                 <br>                 <b>Wind Analysis:</b><br>                 • Condition: STRONG_HEADWIND<br>                 • Category: HEADWIND<br>                 • Headwind: 5.3 m/s<br>                 • Crosswind: 4.0 m/s<br>                 <br>                 <b>Weather Status:</b><br>                 • Intensity: 40.5<br>                 • Category: MODERATE<br>                 • In Weather: YES<br>                 <br>                 <b>Avoidance Analysis:</b><br>                 • Avoiding: YES<br>                 • Heading Deviation: 55.1°<br>                 • Behavior: NORMAL_APPROACH             </div>             </div>`)[0];
+                popup_40123d0e5085f50c8bd82b4a0d024709.setContent(html_099a3cace9decd172d53c64817687033);
+            
+        
+
+        marker_4101bc7712857d87ee977595fc6d1717.bindPopup(popup_40123d0e5085f50c8bd82b4a0d024709)
+        ;
+
+        
+    
+    
+            marker_4101bc7712857d87ee977595fc6d1717.bindTooltip(
+                `<div>
+                     AIQ3255 - HEADWIND - AVOIDING
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4101bc7712857d87ee977595fc6d1717.setIcon(icon_e75cb063b40f4f0eeafd15d33bd03407);
+            
+    
+            var poly_line_d5624a8a27af61a45bc576c00cefe11e = L.polyline(
+                [[13.9322, 100.6157], [13.6811, 100.7475]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": "5, 10", "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var marker_0a52dde3c38b7f8f03460b3e4fba956e = L.marker(
+                [13.6281, 100.7508],
+                {
+}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var icon_c0c6f58c2136dd478ff254fd3853cda2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f97a878a7765e45495da27c7900fb067 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_5aa2369f306332a35d347633d65aa2c2 = $(`<div id="html_5aa2369f306332a35d347633d65aa2c2" style="width: 100.0%; height: 100.0%;">             <div style="width: 300px;">                 <h4>AIQ4118</h4>                 <hr>                 <b>Flight Info:</b><br>                 • Altitude: 2275 ft<br>                 • Speed: 163 kts<br>                 • Distance to BKK: 5.9 km<br>                 <br>                 <b>Wind Analysis:</b><br>                 • Condition: STRONG_TAILWIND<br>                 • Category: TAILWIND<br>                 • Headwind: -6.5 m/s<br>                 • Crosswind: 1.6 m/s<br>                 <br>                 <b>Weather Status:</b><br>                 • Intensity: 0.0<br>                 • Category: CLEAR<br>                 • In Weather: NO<br>                 <br>                 <b>Avoidance Analysis:</b><br>                 • Avoiding: NO<br>                 • Heading Deviation: 179.3°<br>                 • Behavior: NORMAL_APPROACH             </div>             </div>`)[0];
+                popup_f97a878a7765e45495da27c7900fb067.setContent(html_5aa2369f306332a35d347633d65aa2c2);
+            
+        
+
+        marker_0a52dde3c38b7f8f03460b3e4fba956e.bindPopup(popup_f97a878a7765e45495da27c7900fb067)
+        ;
+
+        
+    
+    
+            marker_0a52dde3c38b7f8f03460b3e4fba956e.bindTooltip(
+                `<div>
+                     AIQ4118 - TAILWIND - NORMAL
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0a52dde3c38b7f8f03460b3e4fba956e.setIcon(icon_c0c6f58c2136dd478ff254fd3853cda2);
+            
+    
+            var poly_line_092af450d5a65afebb5397d2a658df53 = L.polyline(
+                [[13.6281, 100.7508], [13.6811, 100.7475]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var marker_5b1ffc030eaefe3d0b0aa1a883c5f237 = L.marker(
+                [13.8179, 100.3197],
+                {
+}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var icon_f944c7a7986a1a2243e262488078115e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "cloud",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c43e075a027e213aa3164eec9ab83f41 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_6f197a42ca6c627df2d0a4c5ca31c04f = $(`<div id="html_6f197a42ca6c627df2d0a4c5ca31c04f" style="width: 100.0%; height: 100.0%;">             <div style="width: 300px;">                 <h4>AXM882</h4>                 <hr>                 <b>Flight Info:</b><br>                 • Altitude: 9800 ft<br>                 • Speed: 301 kts<br>                 • Distance to BKK: 48.6 km<br>                 <br>                 <b>Wind Analysis:</b><br>                 • Condition: STRONG_CROSSWIND<br>                 • Category: CROSSWIND<br>                 • Headwind: 1.0 m/s<br>                 • Crosswind: 6.6 m/s<br>                 <br>                 <b>Weather Status:</b><br>                 • Intensity: 19.3<br>                 • Category: LIGHT<br>                 • In Weather: YES<br>                 <br>                 <b>Avoidance Analysis:</b><br>                 • Avoiding: NO<br>                 • Heading Deviation: 108.6°<br>                 • Behavior: NORMAL_APPROACH             </div>             </div>`)[0];
+                popup_c43e075a027e213aa3164eec9ab83f41.setContent(html_6f197a42ca6c627df2d0a4c5ca31c04f);
+            
+        
+
+        marker_5b1ffc030eaefe3d0b0aa1a883c5f237.bindPopup(popup_c43e075a027e213aa3164eec9ab83f41)
+        ;
+
+        
+    
+    
+            marker_5b1ffc030eaefe3d0b0aa1a883c5f237.bindTooltip(
+                `<div>
+                     AXM882 - CROSSWIND - NORMAL
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5b1ffc030eaefe3d0b0aa1a883c5f237.setIcon(icon_f944c7a7986a1a2243e262488078115e);
+            
+    
+            var poly_line_c9dcc0615d541ee2bfd2da4773cfb3a3 = L.polyline(
+                [[13.8179, 100.3197], [13.6811, 100.7475]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var marker_13b78a955f40bf7919d9a3b7ea932797 = L.marker(
+                [13.8354, 100.7741],
+                {
+}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var icon_e79677cf99c3be4886d48d188cf57dda = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "cloud",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4a2c3c3930e449942b65a03c1d789ec5 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_3c8174c6718696d2044e7058f0019c90 = $(`<div id="html_3c8174c6718696d2044e7058f0019c90" style="width: 100.0%; height: 100.0%;">             <div style="width: 300px;">                 <h4>CFG2362</h4>                 <hr>                 <b>Flight Info:</b><br>                 • Altitude: 2950 ft<br>                 • Speed: 163 kts<br>                 • Distance to BKK: 17.4 km<br>                 <br>                 <b>Wind Analysis:</b><br>                 • Condition: STRONG_HEADWIND<br>                 • Category: HEADWIND<br>                 • Headwind: 6.7 m/s<br>                 • Crosswind: 0.1 m/s<br>                 <br>                 <b>Weather Status:</b><br>                 • Intensity: 0.7<br>                 • Category: CLEAR<br>                 • In Weather: YES<br>                 <br>                 <b>Avoidance Analysis:</b><br>                 • Avoiding: NO<br>                 • Heading Deviation: 4.6°<br>                 • Behavior: NORMAL_APPROACH             </div>             </div>`)[0];
+                popup_4a2c3c3930e449942b65a03c1d789ec5.setContent(html_3c8174c6718696d2044e7058f0019c90);
+            
+        
+
+        marker_13b78a955f40bf7919d9a3b7ea932797.bindPopup(popup_4a2c3c3930e449942b65a03c1d789ec5)
+        ;
+
+        
+    
+    
+            marker_13b78a955f40bf7919d9a3b7ea932797.bindTooltip(
+                `<div>
+                     CFG2362 - HEADWIND - NORMAL
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_13b78a955f40bf7919d9a3b7ea932797.setIcon(icon_e79677cf99c3be4886d48d188cf57dda);
+            
+    
+            var poly_line_af3f18a454d620e4f506db9e8e09fe52 = L.polyline(
+                [[13.8354, 100.7741], [13.6811, 100.7475]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var marker_74b3362060791453e2744a4789f3e6fa = L.marker(
+                [13.149, 101.0729],
+                {
+}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var icon_a49afc7cc9bb7b22aa17771d7a1efabf = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_78cc0c1ee600f992ceac732201e15293 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_59f049fa74aa86b57f28150714ee8442 = $(`<div id="html_59f049fa74aa86b57f28150714ee8442" style="width: 100.0%; height: 100.0%;">             <div style="width: 300px;">                 <h4>HSEFS</h4>                 <hr>                 <b>Flight Info:</b><br>                 • Altitude: 1700 ft<br>                 • Speed: 104 kts<br>                 • Distance to BKK: 68.8 km<br>                 <br>                 <b>Wind Analysis:</b><br>                 • Condition: STRONG_TAILWIND<br>                 • Category: TAILWIND<br>                 • Headwind: -5.1 m/s<br>                 • Crosswind: 4.4 m/s<br>                 <br>                 <b>Weather Status:</b><br>                 • Intensity: 0.0<br>                 • Category: CLEAR<br>                 • In Weather: NO<br>                 <br>                 <b>Avoidance Analysis:</b><br>                 • Avoiding: NO<br>                 • Heading Deviation: 44.9°<br>                 • Behavior: NOT_AVOIDING             </div>             </div>`)[0];
+                popup_78cc0c1ee600f992ceac732201e15293.setContent(html_59f049fa74aa86b57f28150714ee8442);
+            
+        
+
+        marker_74b3362060791453e2744a4789f3e6fa.bindPopup(popup_78cc0c1ee600f992ceac732201e15293)
+        ;
+
+        
+    
+    
+            marker_74b3362060791453e2744a4789f3e6fa.bindTooltip(
+                `<div>
+                     HSEFS - TAILWIND - NORMAL
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_74b3362060791453e2744a4789f3e6fa.setIcon(icon_a49afc7cc9bb7b22aa17771d7a1efabf);
+            
+    
+            var poly_line_68c009ddb9db95860647cd4a4cd9d5f6 = L.polyline(
+                [[13.149, 101.0729], [13.6811, 100.7475]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var marker_0cbc6e65149818f11ac1dfe73f059cb7 = L.marker(
+                [13.6811, 100.7475],
+                {
+}
+            ).addTo(map_1ffd8baa81438bf49c3bf6d7f728abed);
+        
+    
+            var icon_660ab4636832e2ccc867c41e9aa9dada = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "star",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_068ccbc647d8eaff7293c6955e34903c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9087a11694f6cb75d9d82ceb788f7980 = $(`<div id="html_9087a11694f6cb75d9d82ceb788f7980" style="width: 100.0%; height: 100.0%;">Suvarnabhumi Airport (BKK)<br>Wind: 13 kt from 190°</div>`)[0];
+                popup_068ccbc647d8eaff7293c6955e34903c.setContent(html_9087a11694f6cb75d9d82ceb788f7980);
+            
+        
+
+        marker_0cbc6e65149818f11ac1dfe73f059cb7.bindPopup(popup_068ccbc647d8eaff7293c6955e34903c)
+        ;
+
+        
+    
+    
+                marker_0cbc6e65149818f11ac1dfe73f059cb7.setIcon(icon_660ab4636832e2ccc867c41e9aa9dada);
+            
+</script>
+</html>
